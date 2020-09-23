@@ -1,0 +1,95 @@
+<%- include('partials/header'); -%>
+<div class="container white">
+    <div class="container" style="padding: 12px;margin-top: 100px">
+        <form>
+            <h2 class="indigo-text center">Sign Up</h2>
+
+            <div class="input-field">
+                <i class="material-icons prefix">person</i>
+                <input type="text" id="name" required />
+                <label for="name">Name</label>
+            </div>
+
+            <div class="input-field">
+                <i class="material-icons prefix">phone_android</i>
+                <input type="text" id="mobile" required />
+                <label for="mobile">Mobile</label>
+            </div>
+
+            <div class="input-field">
+                <i class="material-icons prefix">email</i>
+                <input type="text" id="email" required />
+                <label for="email">Email</label>
+                <div class="email error"></div>
+            </div>
+
+            <!-- I replaced name="email" with id="email" could lead to errors -->
+            <div class="input-field">
+                <i class="material-icons prefix">lock</i>
+                <input type="text" id="password" required />
+                <label for="password">Password</label>
+                <div class="password error"></div>
+            </div>
+
+            <div class="input-field">
+                <i class="material-icons prefix">lock</i>
+                <input type="text" id="confirm-password" required />
+                <label for="confirm-password">Confirm Password</label>
+                <!-- Create Error div -->
+            </div>
+            
+            <div class="center">
+                <button class="btn indigo center">Sign Up</button>
+            </div>
+        </form>
+
+        <script>
+            const form = document.querySelector('form');
+            const emailError = document.querySelector('.email.error');
+            const passwordError = document.querySelector('.password.error');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+      
+                // get the values
+                const email = form.email.value;
+                const password = form.password.value;
+                const name = form.name.value;
+                const mobile = parseInt(form.mobile.value);
+
+
+                //reset errors
+                emailError.innerHTML = "";
+                passwordError.innerHTML = "";
+      
+                console.log(email, password, name, mobile);
+                
+                try{
+                    const res = await fetch('/signup', {
+                        method: 'POST',
+                        body: JSON.stringify({email: email, password: password, name: name, mobile: mobile}),
+                        headers: {'Content-Type': 'application/json'}
+                    });
+                    const data = await res.json();
+                    console.log(data);
+                    if(data.errors)
+                    {
+                        emailError.innerHTML = data.errors.email;
+                        passwordError.innerHTML =data.errors.password;
+                    }
+                    if(data.user)
+                    {
+                        location.assign('/');
+                    }
+
+                }catch(err){
+                    console.log(err);
+                }
+
+                
+            })
+        </script>
+    </div>
+
+
+</div>
+<%- include('partials/footer'); -%>

@@ -1,0 +1,28 @@
+<%- include('partials/header'); -%>
+<div class="container white">
+    <div class="container" style="padding: 12px; margin-top:100px">
+        <form>
+            <h2 class="indigo-text center">Log in</h2>
+
+            <div class="input-field">
+                <i class="material-icons prefix">email</i>
+                <input type="text" id="email" required />
+                <label for="email">Email</label>
+                <div class="email error"></div>
+            </div>
+
+            <!-- I replaced name="email" with id="email" could lead to errors -->
+            <div class="input-field">
+                <i class="material-icons prefix">lock</i>
+                <input type="text" id="password" required />
+                <label for="password">Password</label>
+                <div class="password error"></div>
+            </div>
+            
+            <div class="center">
+                <button class="btn indigo center">Sign Up</button>
+            </div>
+        </form>
+    </div>
+</div>
+<%- include('partials/footer'); -%>
