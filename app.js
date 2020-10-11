@@ -1,9 +1,16 @@
+// inbuilt imports
 const express = require('express');
 const mongoose = require('mongoose');
-const makeConnection = require('./test/connection')
-const app = express();
-const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
+
+// user imports
+const makeConnection = require('./test/connection')
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const { checkUser } = require('./middleware/authMiddleware');
+
+// app initialization
+const app = express();
 
 // middlewares
 app.use(express.static('public'));
@@ -16,7 +23,7 @@ app.set('view engine', 'ejs');
 // database connection
 makeConnection(app);
 
-
 // routes
-app.get('/', (req, res) => res.render('home'));
+app.get('*', checkUser);
+app.use(userRoutes);
 app.use(authRoutes);

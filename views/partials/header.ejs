@@ -28,13 +28,18 @@
                 <i class="material-icons">menu</i>
                 </a>
                 <ul class="right hide-on-med-and-down">
-                <li><a href="">Home</a></li>
-                <li><a href="">Profile</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/profile">Profile</a></li>
                 <li><a href="">Notifications</a></li>
                 <li><a href="">Messages</a></li>
                 <li><a href="">Account Settings</a></li>
-                <li><a href="/login" class="btn white indigo-text">Login</a></li>
-                <li><a href="/signup" class="btn white indigo-text">Sign Up</a></li>
+                <% if(user){%>
+                    <li><a href="/logout" class="btn white indigo-text">Logout</a></li>
+                    <li><a href="" class="btn-flat indigo darken-3 white-text"><%= user.name %></a></li>
+                <% } else { %>
+                    <li><a href="/login" class="btn white indigo-text">Login</a></li>
+                    <li><a href="/signup" class="btn white indigo-text">Sign Up</a></li>
+                <% } %>
 
                 </ul>
             </div>
@@ -42,11 +47,18 @@
     </div>
 
     <ul class="sidenav" id="mobile-links">
-        <li><a href="">Home</a></li>
-        <li><a href="">Profile</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/profile">Profile</a></li>
         <li><a href="">Notifications</a></li>
         <li><a href="">Messages</a></li>
         <li><a href="">Account Settings</a></li>
+        <% if(user){%>
+            <li><a href="" class="btn indigo darken-3 white-text"><%= user.name %></a></li>
+            <li><a href="/logout" class="btn indigo white-text">Logout</a></li>
+        <% } else { %>
+            <li><a href="/login" class="btn indigo white-text">Login</a></li>
+            <li><a href="/signup" class="btn indigo white-text">Sign Up</a></li>
+        <% } %>
     </ul>
 
 

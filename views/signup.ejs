@@ -47,10 +47,12 @@
             const form = document.querySelector('form');
             const emailError = document.querySelector('.email.error');
             const passwordError = document.querySelector('.password.error');
+            // TODO: add CSS to the error display and don't display on undefined
+
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
       
-                // get the values
+                // get the values from the form
                 const email = form.email.value;
                 const password = form.password.value;
                 const name = form.name.value;
@@ -78,7 +80,7 @@
                     }
                     if(data.user)
                     {
-                        location.assign('/');
+                        location.assign('/profile');
                     }
 
                 }catch(err){

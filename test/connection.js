@@ -1,3 +1,5 @@
+// Connection is made to the database here
+// Port for listening is bind here
 const mongoose = require('mongoose');
 
 makeConnection = (app) => {

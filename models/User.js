@@ -3,6 +3,9 @@ const { isEmail } = require('validator');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 
+// User Model: email, mobile, password
+// TODO: Add Profile related fields in the model
+
 const UserSchema = new Schema({
    email: {
        type: String,
@@ -26,12 +29,26 @@ const UserSchema = new Schema({
    },
 });
 
-// fire a function before doc saved to db
+// Fire this function before doc saved to db
+// This function encrypts the password before storing in the database
 UserSchema.pre('save', async function(next){
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
     next();
  });
+
+// Custom made login function
+UserSchema.statics.login = async function(email, password){
+    const user = await this.findOne({ email: email });
+    if(user){
+        const auth = await bcrypt.compare(password, user.password);
+        if(auth) {
+            return user;
+        }
+        throw Error('Incorrect password');
+    }
+    throw Error('Incorrect email');
+}
  
 // ToDo: Password cross verification
  
