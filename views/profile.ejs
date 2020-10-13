@@ -2,9 +2,77 @@
 
 <header>
     <div class="headings container center">
-        <h2 class="indigo-text">Profile Page</h2>
-        <h3 class="indigo-text">Hello connect users</h3>
+        <h3 class="indigo-text">Hello <b><%= user.name %></b></h3>
     </div>
 </header>
+<div class="container white">
+    <div class="container" style="padding: 12px; margin-top:100px; margin-bottom: 100px">
+        <form>
+            <h2 class="indigo-text center"><b>Update Profile</b></h2>
+
+            <img src="default.jpg" class="responsive-img" style="height:300px;max-width:300px;border: 5px solid #000;"/>
+
+            <div class="file-field input-field">
+
+                <div class="btn indigo">
+                    <span>file</span>
+                    <input type="file" accept="image/*" id="img" required/>
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" placeholder="Upload Profile Photo">
+                </div>
+                <div class="image error"></div>
+            </div>
+            <br/>
+            <div class="input-field col s12">
+                <i class="material-icons prefix">note_add</i>
+                <textarea id="bio" class="materialize-textarea"></textarea>
+                <label for="bio">Bio</label>
+            </div>
+
+            <div class="center">
+                <button class="btn indigo center">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        const form = document.querySelector('form');
+        const imageError = document.querySelector('.image.error');
+
+        // Get the user detailss
+        const email = '<%- JSON.stringify(user.email) %>';
+        const password = '<%- JSON.stringify(user.password) %>';
+        
+        
+    
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // reset errors
+            imageError.innerHTML = "";
+
+            // get the values from the form
+            const img = form.img.files[0];
+
+            try
+            {
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    var display = document.querySelector('img');
+                    var result = reader.result;
+                    display.src = result;
+                }
+
+                reader.readAsDataURL(img);
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        });
+    </script>
+</div>
+
 
 <%- include('partials/footer'); -%>
